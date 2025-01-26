@@ -13,6 +13,10 @@ interface TableColumnProps<T> {
 export const AllItems = () => {
   const dispatch: AppDispatch = useDispatch();
   const items: Item[] = useSelector((state: RootState) => state.items.items);
+  const isLoading: boolean = useSelector(
+    (state: RootState) => state.items.isLoading
+  );
+  const error: string = useSelector((state: RootState) => state.items.error);
   const selectedItem: Item = useSelector(
     (state: RootState) => state.items.selectedItem
   );
@@ -85,6 +89,14 @@ export const AllItems = () => {
   const handleRowClick = (row: RowData) => {
     dispatch(selectItem(items.find((item) => item.guid === row.guid) as Item));
   };
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>

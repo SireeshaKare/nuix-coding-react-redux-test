@@ -1,11 +1,10 @@
 import "./App.css";
-import { ItemTable } from "./components/ItemTable";
+import { AllItems } from "./pages/AllItems";
 
 function App() {
   return (
     <>
-      <h1>All Items</h1>
-      <ItemTable />
+      <AllItems />
     </>
   );
 }

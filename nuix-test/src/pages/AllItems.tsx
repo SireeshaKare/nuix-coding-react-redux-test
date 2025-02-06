@@ -3,7 +3,7 @@ import ColouredTabs from "../components/ColouredTabs";
 import { StyledTable } from "../components/StyledTable";
 import { AppDispatch, RootState } from "../redux/store";
 import { getItems, Item, selectItem } from "../redux/itemSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { API_BASE_URL } from "../util/common";
 
 interface TableColumnProps<T> {
@@ -20,6 +20,8 @@ export const AllItems = () => {
   const selectedItem: Item = useSelector(
     (state: RootState) => state.items.selectedItem
   );
+
+  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
   useEffect(() => {
     dispatch(getItems());
@@ -86,7 +88,8 @@ export const AllItems = () => {
     return tabData;
   };
 
-  const handleRowClick = (row: RowData) => {
+  const handleRowClick = (row: RowData, rowIndex: number) => {
+    setSelectedRowIndex(rowIndex);
     dispatch(selectItem(items.find((item) => item.guid === row.guid) as Item));
   };
 
@@ -106,6 +109,7 @@ export const AllItems = () => {
         rows={rows}
         headerTitles={headerTitles}
         onRowClick={handleRowClick}
+        selectedRowIndex={selectedRowIndex}
       />
       <ColouredTabs tabData={getTabData()} defaultTab="properties" />
     </>

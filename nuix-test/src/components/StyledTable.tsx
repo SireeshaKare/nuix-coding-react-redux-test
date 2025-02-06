@@ -13,19 +13,22 @@ import {
 interface TableColumnProps<RowData> {
   id: keyof RowData;
   label: string;
+  isSelected?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface StyledTableProps<RowData extends { [key: string]: any }> {
   rows: RowData[];
   headerTitles: TableColumnProps<RowData>[];
-  onRowClick?: (row: RowData) => void;
+  onRowClick?: (row: RowData, rowIndex: number) => void;
+  selectedRowIndex?: number | null;
 }
 
 export const StyledTable = <RowData extends object>({
   rows,
   headerTitles,
   onRowClick,
+  selectedRowIndex,
 }: StyledTableProps<RowData>) => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -37,11 +40,7 @@ export const StyledTable = <RowData extends object>({
     },
   }));
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
+  const StyledTableRow = styled(TableRow)(() => ({
     "&:last-child td, &:last-child th": {
       border: 0,
     },
@@ -67,12 +66,14 @@ export const StyledTable = <RowData extends object>({
                 "&:last-child td, &:last-child th": { border: 0 },
                 "&:hover": {
                   boxShadow: onRowClick
-                    ? "0 0 10px rgba(0,0,0,0.2)"
+                    ? "0 0 10px rgba(0,0,0,0.5)"
                     : "inherit",
                 },
+                cursor: onRowClick ? "pointer" : "default",
+                backgroundColor:
+                  rowIndex === selectedRowIndex ? "#1976d2" : "white",
               }}
-              onClick={() => onRowClick && onRowClick(row)}
-              style={{ cursor: onRowClick ? "pointer" : "default" }}
+              onClick={() => onRowClick && onRowClick(row, rowIndex)}
             >
               {headerTitles.map((column, cellIndex) => (
                 <StyledTableCell key={cellIndex} align="center">

@@ -4,15 +4,11 @@ This project implements a React application with TypeScript, Redux, and Material
 ## Features:
 - Fetches item data from API endpoints /items and /image.    
 - Displays items in a list.    
-- Shows details of a selected item.    
+- Shows details of a selected item (properties/image).    
 - Preserves tab selection on item change.    
 - Uses Redux for state management.    
 - Built with TypeScript for type safety.    
 - Styled with Material UI.    
-
-## Requirements:
-Java 17    
-Node.js and npm
 
 ## Installation:
 1. Clone the repository

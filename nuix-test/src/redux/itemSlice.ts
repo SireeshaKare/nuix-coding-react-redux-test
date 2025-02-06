@@ -39,6 +39,8 @@ const itemSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getItems.fulfilled, (state, action: PayloadAction<Item[]>) => {
             state.items = action.payload;
+            state.isLoading = false;
+            state.error = '';
         })
         .addCase(getItems.rejected, (state, action) => {
             state.error = action.error.message || 'An unknown error occurred';

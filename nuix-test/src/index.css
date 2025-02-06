@@ -4,3 +4,8 @@ body {
     padding: 0;
     background-color: #f3f7fd;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
